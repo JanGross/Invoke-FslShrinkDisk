@@ -1297,7 +1297,7 @@ function Optimize-OneDisk {
             $diskPartResult = invoke-diskpart -Path $tempFileName
 
             #diskpart doesn't return an object (1989 remember) so we have to parse the text output.
-            if ($diskPartResult -contains 'DiskPart successfully compacted the virtual disk file.') {
+            if ($diskPartResult -contains 'Die Datei für virtuelle Datenträger wurde von DiskPart erfolgreich komprimiert') {
                 $finalSize = Get-ChildItem $Disk.FullName | Select-Object -ExpandProperty Length
                 $success = $true
                 Remove-Item $tempFileName
@@ -2009,7 +2009,7 @@ function Optimize-OneDisk {
             $diskPartResult = invoke-diskpart -Path $tempFileName
 
             #diskpart doesn't return an object (1989 remember) so we have to parse the text output.
-            if ($diskPartResult -contains 'DiskPart successfully compacted the virtual disk file.') {
+            if ($diskPartResult -contains 'Die Datei für virtuelle Datenträger wurde von DiskPart erfolgreich komprimiert') {
                 $finalSize = Get-ChildItem $Disk.FullName | Select-Object -ExpandProperty Length
                 $success = $true
                 Remove-Item $tempFileName
