@@ -1,4 +1,4 @@
-ï»¿<#
+<#
         .SYNOPSIS
         Shrinks FSLogix Profile and O365 dynamically expanding disk(s).
 
@@ -7,14 +7,14 @@
 
         Dynamically Expanding disks do not natively shrink when the volume of data within them reduces, they stay at the 'High water mark' of historical data volume within them.
 
-        This means that Enterprises can wish to reclaim whitespace inside the disks to keep cost down if the storage is cloud based, or make sure they donâ€™t exceed capacity limits if storage is on-premises.
+        This means that Enterprises can wish to reclaim whitespace inside the disks to keep cost down if the storage is cloud based, or make sure they don’t exceed capacity limits if storage is on-premises.
 
         This Script is designed to work at Enterprise scale to reduce the size of thousands of disks in the shortest time possible.
         This script can be run from any machine in your environment it does not need to be run from a file server hosting the disks.  It does not need the Hyper-V role installed.
         Powershell version 5.x and 7 and above are supported for this script. It needs to be run as administrator due to the requirement for mounting disks to the OS where the script is run.
         This tool is multi-threaded and will take advantage of multiple CPU cores on the machine from which you run the script.  It is not advised to run more than 2x the threads of your available cores on your machine.  You could also use the number of threads to throttle the load on your storage.
         Reducing the size of a virtual hard disk is a storage intensive activity.  The activity is more in file system metadata operations than pure IOPS, so make sure your storage controllers can handle the load.  The storage load occurs on the location where the disks are stored not on the machine where the script is run from.   I advise running the script out of hours if possible, to avoid impacting other users on the storage.
-        With the intention of reducing the storage load to the minimum possible, you can configure the script to only shrink the disks where you will see the most benefit.  You can delete disks which have not been accessed in x number of days previously (configurable).  Deletion of disks is not enabled by default.  By default the script will not run on any disk with less than 5% whitespace inside (configurable).  The script can optionally also not run on disks smaller than xGB (configurable) as itâ€™s possible that even a large % of whitespace in small disks wonâ€™t result in a large capacity reclamation, but even shrinking a small amount of capacity will cause storage load.
+        With the intention of reducing the storage load to the minimum possible, you can configure the script to only shrink the disks where you will see the most benefit.  You can delete disks which have not been accessed in x number of days previously (configurable).  Deletion of disks is not enabled by default.  By default the script will not run on any disk with less than 5% whitespace inside (configurable).  The script can optionally also not run on disks smaller than xGB (configurable) as it’s possible that even a large % of whitespace in small disks won’t result in a large capacity reclamation, but even shrinking a small amount of capacity will cause storage load.
         The script will output a csv in the following format:
 
         "Name","DiskState","OriginalSizeGB","FinalSizeGB","SpaceSavedGB","FullName"
@@ -56,10 +56,10 @@
         The disk size in GB under which the script will not process the file.
 
         .PARAMETER DeleteOlderThanDays
-        If a disk â€˜last access timeâ€™ is older than todays date minus this value, the disk will be deleted from the share.  This is a permanent action.
+        If a disk ‘last access time’ is older than todays date minus this value, the disk will be deleted from the share.  This is a permanent action.
 
         .PARAMETER LogFilePath
-        All disk actions will be saved in a csv file for admin reference.  The default location for this csv file is the userâ€™s temp directory.  The default filename is in the following format: FslShrinkDisk 2020-04-14 19-36-19.csv
+        All disk actions will be saved in a csv file for admin reference.  The default location for this csv file is the user’s temp directory.  The default filename is in the following format: FslShrinkDisk 2020-04-14 19-36-19.csv
 
         .PARAMETER PassThru
         Returns an object representing the item with which you are working. By default, this cmdlet does not generate any pipeline output.
@@ -1297,7 +1297,7 @@ function Optimize-OneDisk {
             $diskPartResult = invoke-diskpart -Path $tempFileName
 
             #diskpart doesn't return an object (1989 remember) so we have to parse the text output.
-            if ($diskPartResult -contains 'Die Datei fÃ¼r virtuelle DatentrÃ¤ger wurde von DiskPart erfolgreich komprimiert') {
+            if ($diskPartResult -match 'Die Datei für virtuelle Datenträger wurde von DiskPart erfolgreich komprimiert') {
                 $finalSize = Get-ChildItem $Disk.FullName | Select-Object -ExpandProperty Length
                 $success = $true
                 Remove-Item $tempFileName
@@ -2009,7 +2009,7 @@ function Optimize-OneDisk {
             $diskPartResult = invoke-diskpart -Path $tempFileName
 
             #diskpart doesn't return an object (1989 remember) so we have to parse the text output.
-            if ($diskPartResult -contains 'Die Datei fÃ¼r virtuelle DatentrÃ¤ger wurde von DiskPart erfolgreich komprimiert') {
+            if ($diskPartResult -match 'Die Datei für virtuelle Datenträger wurde von DiskPart erfolgreich komprimiert') {
                 $finalSize = Get-ChildItem $Disk.FullName | Select-Object -ExpandProperty Length
                 $success = $true
                 Remove-Item $tempFileName
