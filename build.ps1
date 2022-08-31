@@ -41,7 +41,7 @@ function Add-FslRelease {
     }
     $ctrlScript | Set-Content $ReleaseFile
 }
-$path = 'C:\PoShCode\Invoke-FslShrinkDisk'
+$path = Get-Location
 $p = @{
 
     FunctionsFolder = Join-Path $path 'Functions\Private'
