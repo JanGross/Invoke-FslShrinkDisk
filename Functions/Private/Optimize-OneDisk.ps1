@@ -1,4 +1,4 @@
-function Optimize-OneDisk {
+﻿function Optimize-OneDisk {
     [CmdletBinding()]
 
     Param (

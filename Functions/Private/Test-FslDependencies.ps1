@@ -1,4 +1,4 @@
-Function Test-FslDependencies {
+﻿Function Test-FslDependencies {
     [CmdletBinding()]
     Param (
         [Parameter(

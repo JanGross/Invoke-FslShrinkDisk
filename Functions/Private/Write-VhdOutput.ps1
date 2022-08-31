@@ -1,4 +1,4 @@
-function Write-VhdOutput {
+﻿function Write-VhdOutput {
     [CmdletBinding()]
 
     Param (

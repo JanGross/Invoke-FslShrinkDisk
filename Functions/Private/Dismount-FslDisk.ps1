@@ -1,4 +1,4 @@
-function Dismount-FslDisk {
+﻿function Dismount-FslDisk {
     [CmdletBinding()]
 
     Param (

@@ -1,4 +1,4 @@
-function Invoke-Parallel {
+﻿function Invoke-Parallel {
     <#
     .SYNOPSIS
         Function to control parallel processing using runspaces

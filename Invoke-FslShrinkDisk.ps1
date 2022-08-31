@@ -1,4 +1,4 @@
-<#
+﻿<#
         .SYNOPSIS
         Shrinks FSLogix Profile and O365 dynamically expanding disk(s).
 
